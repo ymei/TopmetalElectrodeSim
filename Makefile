@@ -9,6 +9,8 @@ SHLIB_CFLAGS   := -fPIC -shared
 SHLIB_EXT      := .so
 LIBS           := -L/opt/local/lib -lm
 LDFLAGS        :=
+MEX            := /usr/local/Matlab/R2015b/bin/mex
+MEXFLAGS       := -v -largeArrayDims
 ############################# Library add-ons #################################
 TINYSCHEME_FEATURES := -DUSE_DL=1 -DUSE_MATH=1 -DUSE_ASCII_NAMES=0
 INCLUDE += -I/opt/local/include -I./tinyscheme/trunk
@@ -33,7 +35,7 @@ ifneq ($(OSTYPE), Linux)
     endif
   else ifeq ($(OSTYPE), FreeBSD)
     CC      = clang
-	CFLAGS += -Wno-gnu-zero-variadic-macro-arguments
+    CFLAGS += -Wno-gnu-zero-variadic-macro-arguments
     GLLIBS += -lGL -lGLU -lglut
   else ifeq ($(OSTYPE), SunOS)
       CFLAGS := -c -Wall -std=c99 -pedantic
@@ -56,7 +58,7 @@ ifeq ($(ARCH), ppc970)
   CFLAGS += -m64
 endif
 ############################ Define targets ###################################
-EXE_TARGETS = ComsolStreamLineStartPoints ComsolE3dStreamLine ComsolE3dTo2d
+EXE_TARGETS = sltrace.mexa64 ComsolStreamLineStartPoints ComsolE3dStreamLine ComsolE3dTo2d
 DEBUG_EXE_TARGETS = 
 # SHLIB_TARGETS = XXX$(SHLIB_EXT)
 
@@ -71,6 +73,9 @@ debug_exe_targets: $(DEBUG_EXE_TARGETS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
+%.mexa64: %.c
+	$(MEX) $(MEXFLAGS) 'CFLAGS=$$CFLAGS $(CFLAGS)' $(INCLUDE) $<
 
 filters.o: filters.c filters.h common.h
 filters: filters.c utils.o filters.h common.h

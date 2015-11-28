@@ -19,3 +19,7 @@ HexCellTMnFocusElectrode.m is a model file saved in COMSOL
     model.study('std1').run(); % solve
     model.result('pg1').run(); % plot results
     pd = mphplot(model,'pg1'); % plot and get plot data, bug in v5.1
+
+Compile C files to be called in MATLAB:
+
+    mex -v -largeArrayDims 
