@@ -12,9 +12,13 @@ Vfocus = -600;
 dTmFe = 3.0;
 diaFe = 3.0;
 
-for diaFe = 3.0:1.0:8.0
+for diaFe = 8.0:1.0:8.0
     for dTmFe = 1.0:1.0:10.0
         for Vfocus = -900:100:-100
+
+if dTmFe == 3.0 % to prevent crash
+    dTmFe = 3.5
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
