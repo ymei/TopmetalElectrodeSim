@@ -23,7 +23,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 model.param.set('FocusElectrodeHole_diameter', num2str(diaFe, '%f[mm]'), 'hole diameter of the focusing electrode');
-model.param.set('TM_Focus_Electrode_d', num2str(dTmFe, '%f[mm]'), 'distance between top surface of TM electrode and bottom surface of focusing electrode');
+model.param.set('TM_FocusElectrode_d', num2str(dTmFe, '%f[mm]'), 'distance between top surface of TM electrode and bottom surface of focusing electrode');
 model.param.set('V_FocusElectrode', num2str(Vfocus, '%f[V]'), 'voltage on focusing electrode');
 model.param.set('V_Cathode', num2str(Vcathode, '%f[V]'), 'voltage on cathode');
 % model.result('pg2').feature('str1').set('zcoord', '10.9');

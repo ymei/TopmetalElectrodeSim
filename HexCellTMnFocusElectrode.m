@@ -2,7 +2,7 @@ function out = model
 %
 % HexCellTMnFocusElectrode.m
 %
-% Model exported on Nov 27 2015, 01:52 by COMSOL 5.1.0.234.
+% Model exported on Nov 29 2015, 21:01 by COMSOL 5.1.0.234.
 
 import com.comsol.model.*
 import com.comsol.model.util.*
@@ -28,7 +28,7 @@ model.param.set('TMElectrode_y', '0.0[mm]', 'y position of TM electrode');
 model.param.set('TMElectrode_insulator_opening_diameter', '0.8[mm]', 'Opening in the passivation layer for TM Electrode');
 model.param.set('FocusElectrodeHole_diameter', '5.0[mm]', 'hole diameter of the focusing electrode');
 model.param.set('FocusElectrode_thickness', '0.1[mm]', 'thickness of focusing electrode');
-model.param.set('TM_Focus_Electrode_d', '3[mm]', 'distance between top surface of TM electrode and bottom surface of focusing electrode');
+model.param.set('TM_FocusElectrode_d', '3[mm]', 'distance between top surface of TM electrode and bottom surface of focusing electrode');
 model.param.set('BondingWire_diameter', '0.05[mm]', 'diameter of bonding wire');
 model.param.set('BondingWire_pitch', '0.2[mm]', 'pitch between adjacent bonding wires');
 model.param.set('BondingWire_Chip_d', '0.05[mm]', 'distance of bonding wire from the edge of Chip');
@@ -129,7 +129,7 @@ model.geom('geom1').feature('wp4').geom.feature('dif1').label('Focusing Electrod
 model.geom('geom1').feature('wp4').geom.feature('dif1').selection('input').set({'b2'});
 model.geom('geom1').feature('wp4').geom.feature('dif1').selection('input2').set({'c1'});
 model.geom('geom1').feature('wp4').set('unite', 'on');
-model.geom('geom1').feature('wp4').set('quickz', 'ChipSubstrate_thickness+TM_Focus_Electrode_d');
+model.geom('geom1').feature('wp4').set('quickz', 'ChipSubstrate_thickness+TM_FocusElectrode_d');
 model.geom('geom1').create('ext5', 'Extrude');
 model.geom('geom1').feature('ext5').label('Focusing Electrode');
 model.geom('geom1').feature('ext5').setIndex('distance', 'FocusElectrode_thickness', 0);
@@ -200,6 +200,13 @@ model.selection('sel10').set([3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 
 model.selection.create('sel11', 'Explicit');
 model.selection('sel11').geom('geom1', 3, 2, {'exterior'});
 model.selection('sel11').set([2]);
+model.selection.create('es2_dst_pc1', 'Explicit');
+model.selection.create('es2_dst_pc2', 'Explicit');
+model.selection.create('es2_dst_pc8', 'Explicit');
+model.selection.create('es2_dst_pc10', 'Explicit');
+model.selection.create('es2_dst_pc11', 'Explicit');
+model.selection.create('es2_dst_pc12', 'Explicit');
+model.selection.create('es2_dst_pc13', 'Explicit');
 model.selection('sel3').label('TMElectrode');
 model.selection('sel3').label('Explicit 3');
 model.selection('sel7').label('Bonding wires');
@@ -226,6 +233,14 @@ model.selection('sel10').label('Bonding wire Boundaries');
 model.selection('sel10').label('Explicit 10');
 model.selection('sel11').label('Focusing Electrode Boundaries');
 model.selection('sel11').label('Explicit 11');
+model.selection('es2_dst_pc1').label('Explicit 1a');
+model.selection('es2_dst_pc1').label('Explicit 1.1');
+model.selection('es2_dst_pc2').label('Explicit 2a');
+model.selection('es2_dst_pc2').label('Explicit 2.1');
+model.selection('es2_dst_pc8').label('Explicit 8.1');
+model.selection('es2_dst_pc10').label('Explicit 10.1');
+model.selection('es2_dst_pc11').label('Explicit 11.1');
+model.selection('es2_dst_pc12').label('Explicit 12.1');
 
 model.view('view8').tag('view81');
 model.view('view4').tag('view8');
@@ -282,6 +297,31 @@ model.physics('es1').create('pc5', 'PeriodicCondition', 2);
 model.physics('es1').feature('pc5').selection.set([212 217]);
 model.physics('es1').create('pc6', 'PeriodicCondition', 2);
 model.physics('es1').feature('pc6').selection.set([210 215]);
+model.physics.create('es2', 'Electrostatics', 'geom1');
+model.physics('es2').identifier('es2');
+model.physics('es2').field('electricpotential').field('V1');
+model.physics('es2').create('pot4', 'ElectricPotential', 2);
+model.physics('es2').feature('pot4').selection.set([10]);
+model.physics('es2').create('pot5', 'ElectricPotential', 2);
+model.physics('es2').feature('pot5').selection.named('sel9');
+model.physics('es2').create('pot6', 'ElectricPotential', 2);
+model.physics('es2').feature('pot6').selection.named('sel11');
+model.physics('es2').create('gnd4', 'Ground', 2);
+model.physics('es2').feature('gnd4').selection.named('sel10');
+model.physics('es2').create('gnd5', 'Ground', 2);
+model.physics('es2').feature('gnd5').selection.set([3 184]);
+model.physics('es2').create('pc1', 'PeriodicCondition', 2);
+model.physics('es2').feature('pc1').selection.set([8 233]);
+model.physics('es2').create('pc8', 'PeriodicCondition', 2);
+model.physics('es2').feature('pc8').selection.set([2 231]);
+model.physics('es2').create('pc10', 'PeriodicCondition', 2);
+model.physics('es2').feature('pc10').selection.set([7 236]);
+model.physics('es2').create('pc11', 'PeriodicCondition', 2);
+model.physics('es2').feature('pc11').selection.set([1 234]);
+model.physics('es2').create('pc12', 'PeriodicCondition', 2);
+model.physics('es2').feature('pc12').selection.set([212 217]);
+model.physics('es2').create('pc13', 'PeriodicCondition', 2);
+model.physics('es2').feature('pc13').selection.set([210 215]);
 
 model.mesh('mesh1').create('ftet2', 'FreeTet');
 model.mesh('mesh1').feature('ftet2').selection.geom('geom1', 3);
@@ -290,8 +330,6 @@ model.mesh('mesh1').feature('ftet2').create('size1', 'Size');
 model.mesh('mesh1').feature('ftet2').create('size3', 'Size');
 model.mesh('mesh1').feature('ftet2').feature('size1').selection.named('sel1');
 model.mesh('mesh1').feature('ftet2').feature('size3').selection.named('sel3');
-
-model.result.table.create('evl3', 'Table');
 
 model.view('view1').set('transparency', 'on');
 model.view('view1').set('showlabels', true);
@@ -432,8 +470,11 @@ model.material('mat4').propertyGroup('def').set('relpermittivity', {'4' '0' '0' 
 
 model.coordSystem('sys1').set('frametype', 'geometry');
 
-model.physics('es1').label('Electrostatics');
+model.physics('es1').label('Electric (drift) field');
 model.physics('es1').prop('MeshControl').set('EnableMeshControl', '1');
+model.physics('es1').feature('ccn1').label('Charge Conservation');
+model.physics('es1').feature('zc1').label('Zero Charge');
+model.physics('es1').feature('init1').label('Initial Values');
 model.physics('es1').feature('pot1').set('V0', 'V_Cathode');
 model.physics('es1').feature('pot1').label('V Cathode');
 model.physics('es1').feature('pot2').set('V0', 'V_TMElectrode');
@@ -442,6 +483,21 @@ model.physics('es1').feature('pot3').set('V0', 'V_FocusElectrode');
 model.physics('es1').feature('pot3').label('V Focusing Electrode');
 model.physics('es1').feature('gnd2').label('Bonding wires on gnd');
 model.physics('es1').feature('gnd3').label('PCB on gnd');
+model.physics('es2').label('Weighting field');
+model.physics('es2').feature('ccn1').label('Charge Conservation');
+model.physics('es2').feature('zc1').label('Zero Charge');
+model.physics('es2').feature('init1').label('Initial Values');
+model.physics('es2').feature('pot4').label('V Cathode');
+model.physics('es2').feature('pot5').set('V0', '1.0');
+model.physics('es2').feature('pot5').label('V TMElectrode');
+model.physics('es2').feature('pot6').label('V Focusing Electrode');
+model.physics('es2').feature('gnd4').label('Bonding wires on gnd');
+model.physics('es2').feature('gnd5').label('PCB on gnd');
+model.physics('es2').feature('pc8').label('Periodic Condition 2');
+model.physics('es2').feature('pc10').label('Periodic Condition 3');
+model.physics('es2').feature('pc11').label('Periodic Condition 4');
+model.physics('es2').feature('pc12').label('Periodic Condition 5');
+model.physics('es2').feature('pc13').label('Periodic Condition 6');
 
 model.mesh('mesh1').feature('size').set('hauto', 4);
 model.mesh('mesh1').feature('ftet2').label('Free Tetrahedral 1');
@@ -459,11 +515,10 @@ model.mesh('mesh1').feature('ftet2').feature('size3').set('hmin', 'TMElectrode_m
 model.mesh('mesh1').feature('ftet2').feature('size3').set('hmax', 'TMElectrode_mesh_max');
 model.mesh('mesh1').run;
 
-model.result.table('evl3').label('Evaluation 3D');
-model.result.table('evl3').comments('Interactive 3D values');
-
 model.study.create('std1');
 model.study('std1').create('stat', 'Stationary');
+model.study.create('std2');
+model.study('std2').create('stat', 'Stationary');
 
 model.sol.create('sol1');
 model.sol('sol1').study('std1');
@@ -476,6 +531,7 @@ model.sol('sol1').feature('s1').create('i1', 'Iterative');
 model.sol('sol1').feature('s1').create('i2', 'Iterative');
 model.sol('sol1').feature('s1').feature('se1').create('ss1', 'SegregatedStep');
 model.sol('sol1').feature('s1').feature('se1').create('ss2', 'SegregatedStep');
+model.sol('sol1').feature('s1').feature('se1').create('es1', 'SegregatedStep');
 model.sol('sol1').feature('s1').feature('se1').feature.remove('ssDef');
 model.sol('sol1').feature('s1').feature('i1').create('mg1', 'Multigrid');
 model.sol('sol1').feature('s1').feature('i2').create('mg1', 'Multigrid');
@@ -487,27 +543,73 @@ model.study('std1').feature('stat').set('solnumhide', 'on');
 model.study('std1').feature('stat').set('notstudyhide', 'on');
 model.study('std1').feature('stat').set('notsolhide', 'on');
 model.study('std1').feature('stat').set('notsolnumhide', 'on');
+model.study('std2').feature('stat').set('initstudyhide', 'on');
+model.study('std2').feature('stat').set('initsolhide', 'on');
+model.study('std2').feature('stat').set('solnumhide', 'on');
+model.study('std2').feature('stat').set('notstudyhide', 'on');
+model.study('std2').feature('stat').set('notsolhide', 'on');
+model.study('std2').feature('stat').set('notsolnumhide', 'on');
+
+model.sol.create('sol2');
+model.sol('sol2').study('std2');
+model.sol('sol2').attach('std2');
+model.sol('sol2').create('st1', 'StudyStep');
+model.sol('sol2').create('v1', 'Variables');
+model.sol('sol2').create('s1', 'Stationary');
+model.sol('sol2').feature('s1').create('fc1', 'FullyCoupled');
+model.sol('sol2').feature('s1').create('i1', 'Iterative');
+model.sol('sol2').feature('s1').feature('i1').create('mg1', 'Multigrid');
+model.sol('sol2').feature('s1').feature.remove('fcDef');
+
+model.study('std1').feature('stat').set('initstudyhide', 'on');
+model.study('std1').feature('stat').set('initsolhide', 'on');
+model.study('std1').feature('stat').set('solnumhide', 'on');
+model.study('std1').feature('stat').set('notstudyhide', 'on');
+model.study('std1').feature('stat').set('notsolhide', 'on');
+model.study('std1').feature('stat').set('notsolnumhide', 'on');
+model.study('std2').feature('stat').set('initstudyhide', 'on');
+model.study('std2').feature('stat').set('initsolhide', 'on');
+model.study('std2').feature('stat').set('solnumhide', 'on');
+model.study('std2').feature('stat').set('notstudyhide', 'on');
+model.study('std2').feature('stat').set('notsolhide', 'on');
+model.study('std2').feature('stat').set('notsolnumhide', 'on');
 
 model.result.create('pg1', 'PlotGroup3D');
 model.result.create('pg2', 'PlotGroup3D');
 model.result('pg1').create('mslc1', 'Multislice');
+model.result('pg1').create('str1', 'Streamline');
 model.result('pg1').feature('mslc1').set('data', 'dset1');
+model.result('pg2').create('mslc1', 'Multislice');
 model.result('pg2').create('str1', 'Streamline');
+model.result('pg2').feature('mslc1').set('data', 'dset2');
+model.result('pg2').feature('str1').set('data', 'dset1');
 model.result.export.create('plot1', 'Plot');
 
+model.study('std1').label('Study Electric (drift) field');
+model.study('std1').feature('stat').set('probefreq', 'psteps');
+model.study('std1').feature('stat').set('plot', 'on');
+model.study('std1').feature('stat').set('activate', {'es1' 'on' 'es2' 'off'});
+model.study('std2').label('Study Weighting field');
+model.study('std2').feature('stat').set('activate', {'es1' 'off' 'es2' 'on'});
+
 model.sol('sol1').attach('std1');
-model.sol('sol1').label('Solver 1');
+model.sol('sol1').feature('s1').set('plot', 'on');
 model.sol('sol1').feature('s1').feature('se1').feature('ss1').set('linsolver', 'i1');
 model.sol('sol1').feature('s1').feature('se1').feature('ss1').set('segvar', {'comp1_V1'});
 model.sol('sol1').feature('s1').feature('se1').feature('ss2').set('linsolver', 'i2');
 model.sol('sol1').feature('s1').feature('se1').feature('ss2').set('segvar', {'comp1_V1'});
+model.sol('sol1').feature('s1').feature('se1').feature('es1').set('linsolver', 'i2');
 model.sol('sol1').feature('s1').feature('i1').set('linsolver', 'cg');
 model.sol('sol1').feature('s1').feature('i1').feature('mg1').set('prefun', 'amg');
 model.sol('sol1').feature('s1').feature('i2').set('linsolver', 'cg');
 model.sol('sol1').feature('s1').feature('i2').feature('mg1').set('prefun', 'amg');
+model.sol('sol2').attach('std2');
+model.sol('sol2').feature('s1').feature('i1').set('linsolver', 'cg');
+model.sol('sol2').feature('s1').feature('i1').feature('mg1').set('prefun', 'amg');
 
 model.result.dataset('dset1').label('Solution 1');
-model.result('pg1').label('Electric Field');
+model.result.dataset('dset2').label('Solution 2');
+model.result('pg1').label('Electric (drift) field');
 model.result('pg1').set('showlegendsmaxmin', true);
 model.result('pg1').set('frametype', 'spatial');
 model.result('pg1').feature('mslc1').set('unit', 'V/m');
@@ -520,10 +622,28 @@ model.result('pg1').feature('mslc1').set('rangedatamin', '300');
 model.result('pg1').feature('mslc1').set('rangecoloractive', 'on');
 model.result('pg1').feature('mslc1').set('rangedataactive', 'on');
 model.result('pg1').feature('mslc1').set('rangecolormax', '1.8e6');
-model.result('pg2').label('Streamline');
+model.result('pg1').feature('str1').set('posmethod', 'start');
+model.result('pg1').feature('str1').set('zcoord', '19.9');
+model.result('pg1').feature('str1').set('descr', '');
+model.result('pg1').feature('str1').set('startmethod', 'coord');
+model.result('pg1').feature('str1').set('resolution', 'fine');
+model.result('pg1').feature('str1').set('ycoord', '-4.07032, -4.07032, -4.07032, -4.07032, -4.07032, -4.07032, -4.07032, -4.07032, -4.07032, -4.07032, -3.61806, -3.61806, -3.61806, -3.61806, -3.61806, -3.61806, -3.61806, -3.61806, -3.61806, -3.61806, -3.61806, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.61806, 3.61806, 3.61806, 3.61806, 3.61806, 3.61806, 3.61806, 3.61806, 3.61806, 3.61806, 3.61806, 4.07032, 4.07032, 4.07032, 4.07032, 4.07032, 4.07032, 4.07032, 4.07032, 4.07032, 4.07032');
+model.result('pg1').feature('str1').set('back', false);
+model.result('pg1').feature('str1').set('xcoord', '-2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, -3.13333, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, 3.13333, -3.39444, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, 3.39444, -3.65556, -3.13333, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, 3.13333, 3.65556, -3.91667, -3.39444, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, 3.39444, 3.91667, -4.17778, -3.65556, -3.13333, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, 3.13333, 3.65556, 4.17778, -4.43889, -3.91667, -3.39444, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, 3.39444, 3.91667, 4.43889, -4.7, -4.17778, -3.65556, -3.13333, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, 3.13333, 3.65556, 4.17778, 4.7, -4.43889, -3.91667, -3.39444, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, 3.39444, 3.91667, 4.43889, -4.17778, -3.65556, -3.13333, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, 3.13333, 3.65556, 4.17778, -3.91667, -3.39444, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, 3.39444, 3.91667, -3.65556, -3.13333, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, 3.13333, 3.65556, -3.39444, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, 3.39444, -3.13333, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, 3.13333, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35');
+model.result('pg1').feature('str1').set('expr', {'-es1.Ex' '-es1.Ey' '-es1.Ez'});
+model.result('pg2').label('Weighting field');
 model.result('pg2').set('showlegendsmaxmin', true);
 model.result('pg2').set('frametype', 'spatial');
-model.result('pg2').feature('str1').label('Streamline_es1');
+model.result('pg2').feature('mslc1').label('Multislice 2');
+model.result('pg2').feature('mslc1').set('unit', 'V/m');
+model.result('pg2').feature('mslc1').set('titletype', 'custom');
+model.result('pg2').feature('mslc1').set('expr', 'es2.normE');
+model.result('pg2').feature('mslc1').set('znumber', '0');
+model.result('pg2').feature('mslc1').set('descr', 'Weighting field');
+model.result('pg2').feature('mslc1').set('rangecoloractive', 'on');
+model.result('pg2').feature('mslc1').set('descractive', true);
+model.result('pg2').feature('mslc1').set('rangecolormax', '1000');
+model.result('pg2').feature('str1').active(false);
 model.result('pg2').feature('str1').set('posmethod', 'start');
 model.result('pg2').feature('str1').set('zcoord', '19.9');
 model.result('pg2').feature('str1').set('descr', '');
@@ -532,11 +652,9 @@ model.result('pg2').feature('str1').set('resolution', 'fine');
 model.result('pg2').feature('str1').set('ycoord', '-4.07032, -4.07032, -4.07032, -4.07032, -4.07032, -4.07032, -4.07032, -4.07032, -4.07032, -4.07032, -3.61806, -3.61806, -3.61806, -3.61806, -3.61806, -3.61806, -3.61806, -3.61806, -3.61806, -3.61806, -3.61806, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -3.1658, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.71355, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -2.26129, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.80903, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -1.35677, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.904515, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, -0.452258, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.452258, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 0.904515, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.35677, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 1.80903, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.26129, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 2.71355, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.1658, 3.61806, 3.61806, 3.61806, 3.61806, 3.61806, 3.61806, 3.61806, 3.61806, 3.61806, 3.61806, 3.61806, 4.07032, 4.07032, 4.07032, 4.07032, 4.07032, 4.07032, 4.07032, 4.07032, 4.07032, 4.07032');
 model.result('pg2').feature('str1').set('back', false);
 model.result('pg2').feature('str1').set('xcoord', '-2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, -3.13333, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, 3.13333, -3.39444, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, 3.39444, -3.65556, -3.13333, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, 3.13333, 3.65556, -3.91667, -3.39444, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, 3.39444, 3.91667, -4.17778, -3.65556, -3.13333, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, 3.13333, 3.65556, 4.17778, -4.43889, -3.91667, -3.39444, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, 3.39444, 3.91667, 4.43889, -4.7, -4.17778, -3.65556, -3.13333, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, 3.13333, 3.65556, 4.17778, 4.7, -4.43889, -3.91667, -3.39444, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, 3.39444, 3.91667, 4.43889, -4.17778, -3.65556, -3.13333, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, 3.13333, 3.65556, 4.17778, -3.91667, -3.39444, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, 3.39444, 3.91667, -3.65556, -3.13333, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, 3.13333, 3.65556, -3.39444, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, 3.39444, -3.13333, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, 3.13333, -2.87222, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35, 2.87222, -2.61111, -2.08889, -1.56667, -1.04444, -0.522222, 0, 0.522222, 1.04444, 1.56667, 2.08889, 2.61111, -2.35, -1.82778, -1.30556, -0.783333, -0.261111, 0.261111, 0.783333, 1.30556, 1.82778, 2.35');
-model.result('pg2').feature('str1').set('expr', {'-es1.Ex' '-es1.Ey' '-es1.Ez'});
+model.result('pg2').feature('str1').set('expr', {'-es2.Ex' '-es2.Ey' '-es2.Ez'});
 model.result.export('plot1').label('Streamline');
-model.result.export('plot1').set('plotgroup', 'pg2');
 model.result.export('plot1').set('plot', 'str1');
 model.result.export('plot1').set('filename', 'sl.dat');
-model.result.export('plot1').set('fullprec', false);
 
 out = model;
