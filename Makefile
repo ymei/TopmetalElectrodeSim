@@ -3,13 +3,13 @@ ARCH   = $(shell uname -m)
 ##################################### Defaults ################################
 CC             := gcc
 INCLUDE        := -I. -I/usr/local/include
-CFLAGS         := -Wall -Wno-overlength-strings -std=c99 -pedantic -O3
+CFLAGS         := -Wall -Wno-overlength-strings -Wpedantic -std=c99 -fPIC -O3
 CFLAGS_32      := -m32
-SHLIB_CFLAGS   := -fPIC -shared
+SHLIB_CFLAGS   := -shared
 SHLIB_EXT      := .so
 LIBS           := -L/opt/local/lib -lm
 LDFLAGS        :=
-MEX            := /usr/local/Matlab/R2015b/bin/mex
+MEX            := mex
 MEXFLAGS       := -v -largeArrayDims
 ############################# Library add-ons #################################
 TINYSCHEME_FEATURES := -DUSE_DL=1 -DUSE_MATH=1 -DUSE_ASCII_NAMES=0
@@ -38,7 +38,7 @@ ifneq ($(OSTYPE), Linux)
     CFLAGS += -Wno-gnu-zero-variadic-macro-arguments
     GLLIBS += -lGL -lGLU -lglut
   else ifeq ($(OSTYPE), SunOS)
-      CFLAGS := -c -Wall -std=c99 -pedantic
+      CFLAGS := -c -Wall -std=c99 -Wpedantic
   else
       # Let's assume this is win32
       SHLIB_EXT           := .dll
@@ -59,7 +59,7 @@ ifeq ($(ARCH), ppc970)
 endif
 ############################ Define targets ###################################
 EXE_TARGETS = sltrace.mexa64 ComsolStreamLineStartPoints ComsolE3dStreamLine ComsolE3dTo2d
-DEBUG_EXE_TARGETS = 
+DEBUG_EXE_TARGETS =
 # SHLIB_TARGETS = XXX$(SHLIB_EXT)
 
 ifeq ($(ARCH), x86_64) # compile a 32bit version on 64bit platforms
